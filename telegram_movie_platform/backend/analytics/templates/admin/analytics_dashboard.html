@@ -1,0 +1,75 @@
+{% extends "admin/base_site.html" %}
+{% block title %}Analitika Paneli | {{ site_title }}{% endblock %}
+{% block content %}
+<div style="max-width: 1200px; margin: 0 auto; font-family: system-ui, -apple-system, sans-serif;">
+  <h1 style="margin-bottom: 16px;">Platforma Statistikasi va Sinxronizatsiya</h1>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 24px;">
+    <div style="padding: 16px; border: 1px solid #d1d5db; border-radius: 8px; background: #fff;">
+      <div style="font-size: 12px; color: #6b7280;">Jami kinolar</div>
+      <div style="font-size: 28px; font-weight: 700; font-variant-numeric: tabular-nums;">{{ total_movies }}</div>
+    </div>
+    <div style="padding: 16px; border: 1px solid #d1d5db; border-radius: 8px; background: #fff;">
+      <div style="font-size: 12px; color: #6b7280;">Jami foydalanuvchilar</div>
+      <div style="font-size: 28px; font-weight: 700; font-variant-numeric: tabular-nums;">{{ total_users }}</div>
+    </div>
+    <div style="padding: 16px; border: 1px solid #d1d5db; border-radius: 8px; background: #fff;">
+      <div style="font-size: 12px; color: #6b7280;">Kunlik faol (DAU)</div>
+      <div style="font-size: 28px; font-weight: 700; font-variant-numeric: tabular-nums;">{{ dau }}</div>
+    </div>
+    <div style="padding: 16px; border: 1px solid #d1d5db; border-radius: 8px; background: #fff;">
+      <div style="font-size: 12px; color: #6b7280;">Umumiy ko‘rishlar</div>
+      <div style="font-size: 28px; font-weight: 700; font-variant-numeric: tabular-nums;">{{ total_views }}</div>
+    </div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+    <div style="padding: 16px; border: 1px solid #d1d5db; border-radius: 8px; background: #fff;">
+      <h2 style="margin-top: 0;">Eng mashhur kinolar</h2>
+      <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+          <tr style="text-align: left; border-bottom: 1px solid #e5e7eb;">
+            <th style="padding: 8px 4px;">Kod</th>
+            <th style="padding: 8px 4px;">Nomi</th>
+            <th style="padding: 8px 4px; text-align: right;">Ko‘rishlar</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for movie in popular_movies %}
+          <tr style="border-bottom: 1px solid #f3f4f6;">
+            <td style="padding: 8px 4px; font-family: monospace;">{{ movie.movie_code }}</td>
+            <td style="padding: 8px 4px;">{{ movie.title }}</td>
+            <td style="padding: 8px 4px; text-align: right; font-variant-numeric: tabular-nums;">{{ movie.views_count }}</td>
+          </tr>
+          {% empty %}
+          <tr><td colspan="3" style="padding: 12px 4px; color: #6b7280;">Hozircha ma’lumot yo‘q</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div style="padding: 16px; border: 1px solid #d1d5db; border-radius: 8px; background: #fff;">
+      <h2 style="margin-top: 0;">So‘nggi kanal sinxronizatsiyalari</h2>
+      <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+          <tr style="text-align: left; border-bottom: 1px solid #e5e7eb;">
+            <th style="padding: 8px 4px;">Hodisa</th>
+            <th style="padding: 8px 4px;">Xabar ID</th>
+            <th style="padding: 8px 4px;">Holat</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for log in recent_logs %}
+          <tr style="border-bottom: 1px solid #f3f4f6;">
+            <td style="padding: 8px 4px;">{{ log.get_event_type_display }}</td>
+            <td style="padding: 8px 4px; font-family: monospace;">{{ log.message_id|default:"—" }}</td>
+            <td style="padding: 8px 4px;">{% if log.success %}Muvaffaqiyatli{% else %}Xato{% endif %}</td>
+          </tr>
+          {% empty %}
+          <tr><td colspan="3" style="padding: 12px 4px; color: #6b7280;">Sinxronizatsiya tarixi bo‘sh</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

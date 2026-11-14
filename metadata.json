@@ -1,0 +1,8 @@
+{
+  "name": "KinoSync — Telegram Kino Platformasi",
+  "description": "Avtomatik kanal sinxronizatsiyasi, Django 5 boshqaruv paneli va o‘zbekcha Aiogram 3 Telegram kino bot platformasi.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
